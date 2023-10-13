@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.PageRequest;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +57,6 @@ public class StudentImplService implements StudentService {
             log.error(STUDENT_NO_EXIST + id);
             return new ResponseEntity<>("Estudiante no existe con ese id o ya fue eliminado", HttpStatus.BAD_REQUEST);
         }
-        // studentExist.get().setDeleteStudent(LocalDate.now());
-        // studentRepository.save(studentExist.get());
         studentRepository.deleteById(id);
         log.info("Eliminación del estudiante con id: " + id);
         return new ResponseEntity<>("El estudiante se elimino correctamente", HttpStatus.ACCEPTED);
@@ -108,7 +105,7 @@ public class StudentImplService implements StudentService {
     }
 
     @Override
-    public ResponseEntity<Object> getdeleteStudents(Integer page, Integer size,String orientation, String orderBy) {
+    public ResponseEntity<Object> getDeleteStudents(Integer page, Integer size,String orientation, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(orientation),orderBy));
         Page<Student> deleteStudents = studentRepository.findAllDeleteStudents(pageable);
         return new ResponseEntity<>(deleteStudents,HttpStatus.OK );

@@ -17,5 +17,5 @@ public interface StudentService {
 
     ResponseEntity<Object> getStudent(Long id);
 
-    ResponseEntity<Object> getdeleteStudents(Integer page, Integer size,String orientation, String orderBy);
+    ResponseEntity<Object> getDeleteStudents(Integer page, Integer size,String orientation, String orderBy);
 }

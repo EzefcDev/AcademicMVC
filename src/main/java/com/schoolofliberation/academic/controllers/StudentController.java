@@ -70,6 +70,6 @@ public class StudentController {
         @RequestParam(defaultValue = "10") Integer size, 
         @RequestParam(defaultValue = "asc") String orientation,
         @RequestParam(defaultValue = "id") String orderBy){
-        return studentService.getdeleteStudents(page, size,orientation, orderBy);
+        return studentService.getDeleteStudents(page, size,orientation, orderBy);
     }
 }
