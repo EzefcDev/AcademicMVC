@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Academic</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <!-- breadcrumb -->
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page" th:text="${location}"></li>
+                </ol>
+            </nav>
+            <h1>Estudiantes</h1>
+            <br/>
+            <!-- search -->
+            <form th:action="@{/}">
+                <div class="row justify-content-md-center ">
+                    <div class="mb-3 col-sm-3">
+                        <input type="text" class="form-control" name="name" placeholder="search..." th:value="${name}">
+                        <label for="search"></label>
+                    </div>
+                    <div class="mb-3 col-3 ">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Buscar
+                        <button/>
+                    </div>
+                </div>
+            </form>
+            <a th:href="@{/agregar}" class="btn btn-primary mb-3">
+                <i class="fa-solid fa-plus"></i>
+                Agregar
+            <a/> 
+            <!-- table -->
+            <div th:if="${students != null and !students.empty}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Carrera</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="student : ${students}">
+                            <td th:text="${student.name}"></td>
+                            <td th:text="${student.lastname}"></td>
+                            <td th:text="${student.dni}"></td>
+                            <td th:text="${student.studentCareer}"></td>
+                            <td th:text="${student.studentStatus.meaning}"></td>
+                            <td>
+                                <a th:href="@{/editar/} + ${student.id}" class="btn btn-light">
+                                    <i class="fa-solid fa-pen"></i>
+                                <a/>
+                                <a th:href="@{/eliminar/} + ${student.id}" class="btn btn-light">
+                                    <i class="fa-solid fa-trash"></i>
+                                <a/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- pagination -->
+                <div>
+                    <form th:action="@{/}">
+                        <nav aria-label="Page navigation ">
+                            <div style="display: flex; align-items: center;">
+                                <div class="input-group" style="width: 5% !important;">
+                                    <select id="opcion">
+                                        <option selected th:text="${totalElementsForPage}"></option>
+                                        <option th:each="opcion : ${opciones}" th:value="${opcion}" th:text="${opcion}"></option>
+                                    </select>
+                                </div>
+                                <p>de</p>
+                                <p th:text=" ${totalElements}"></p>
+                            </div>
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <button th:value="${page != 0} ? ${page -1} : ${page}" aria-label="Previous" th:class="${page == 0} ? 'disabled page-link' : 'page-link'" name="page">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </button>
+                                </li>
+                                <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPage -1)}" >
+                                    <button type="submit"  class="page-link" th:text="${page + 1} " th:value="${page}" name="page"> 
+                                    </button>
+                                </li>    
+                                <li class="page-item">
+                                    <button th:value="${page != totalPage -1} ? ${page + 1} : ${page}" aria-label="Next" th:class="${page == totalPage - 1} ? 'disabled page-link' : 'page-link'" name="page">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </form>
+                </div>
+            </div>
+            <!-- si no existe -->
+            <div th:if="${students == null or students.empty}">
+                <span>La lista esta vacía</span>
+            </div>
+        </div>
+    </body>
+    <script>
+        let select = document.getElementById("opcion");
+
+        select.addEventListener("change", function() {
+            
+            let valorSeleccionado = select.value;
+
+            console.log("Opción seleccionada: " + valorSeleccionado);
+            
+            window.location.href = '/?size=' + encodeURIComponent(valorSeleccionado);
+
+        });
+    </script>
+</html>
