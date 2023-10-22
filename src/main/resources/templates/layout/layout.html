@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Academic</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <header th:fragment="header">
+            <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+                <div class="container-fluid">
+                  <div class="navbar-brand">
+                    <i class="fa-solid fa-building-columns"></i>
+                    Academic
+                  </div>
+                  <div class="dropdown">
+                      <button class="btn btn-outline-success dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-ninja"></i></button>
+                      <ul class="dropdown-menu  dropdown-menu-end dropdown-menu-lg-star" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Perfil</a></li>
+                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                      </ul>
+                  </div>
+                </div>
+            </nav>
+        </header>
+        <footer th:fragment="footer">
+            <nav class="navbar fixed-bottom navbar-light" style="background-color: #e3f2fd;">
+                <div class="container-fluid">
+                    <span class="navbar-brand">
+                    Diseñado por EzeFC para la Escuela de la Liberación, todos los derechos reservados
+                    </span>
+                </div>
+            </nav>
+        </footer>
+    </body>
+</html>

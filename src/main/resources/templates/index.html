@@ -11,7 +11,8 @@
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     </head>
     <body>
-        <div class="container">
+        <header th:replace="layout/layout :: header"></header>
+        <div class="container my-5">
             <!-- breadcrumb -->
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -110,6 +111,7 @@
                 <span>La lista esta vacía</span>
             </div>
         </div>
+        <footer th:replace="layout/layout :: footer"></footer>
     </body>
     <script>
         let select = document.getElementById("opcion");

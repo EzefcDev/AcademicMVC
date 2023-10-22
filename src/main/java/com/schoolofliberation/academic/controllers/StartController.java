@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +69,10 @@ public class StartController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(StudentDTO studentDTO){
+    public String guardar(@Valid StudentDTO studentDTO, Errors errors){
+        if (errors.hasErrors()) {
+            return "crear";
+        }
         studentService.createStudent(studentDTO);
         return "redirect:/";
     }
@@ -83,7 +88,10 @@ public class StartController {
     }
 
     @PostMapping("/guardar-editado/{id}")
-    public String guardarModificado(@PathVariable(name = "id") Long id ,StudentDTO studentDTO){
+    public String guardarModificado(@PathVariable(name = "id") Long id ,@Valid StudentDTO studentDTO, Errors errors){
+        if (errors.hasErrors()) {
+            return "modificar";
+        }
         studentService.updateStudent(id,studentDTO);
         return "redirect:/";
     }
