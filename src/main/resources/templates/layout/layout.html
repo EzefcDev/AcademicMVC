@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Academic</title>
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <link rel="stylesheet" href="/webjars/bootstrap/5.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.4.2/css/all.css}">
+        <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+        <script src="/webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
     </head>
     <body>
         <header th:fragment="header">
@@ -21,8 +21,12 @@
                   <div class="dropdown">
                       <button class="btn btn-outline-success dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-ninja"></i></button>
                       <ul class="dropdown-menu  dropdown-menu-end dropdown-menu-lg-star" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                        <li><span class="dropdown-item" sec:authentication="name"></spa></li>
+                        <li>
+                            <form method="POST" th:action="@{/logout}">
+                                <a class="dropdown-item" href="#" onclick="this.parentNode.submit();">Cerrar sesión</a>
+                            </form>
+                        </li>
                       </ul>
                   </div>
                 </div>

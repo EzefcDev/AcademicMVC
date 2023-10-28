@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,19 +22,19 @@ import com.schoolofliberation.academic.Services.StudentVistaService;
 import com.schoolofliberation.academic.dto.StudentDTO;
 import com.schoolofliberation.academic.entities.Student;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class StartController {
 
     @Autowired
     StudentVistaService studentService;
     
     @GetMapping("/")
-    public String start(Model model,
-        @RequestParam(defaultValue = "0") Integer page, 
-        @RequestParam(defaultValue = "10") Integer size, 
-        @RequestParam(required = false, name="name", defaultValue = "") String name,
-        @RequestParam(defaultValue = "asc") String orientation,
-        @RequestParam(defaultValue = "id") String orderBy){
+    public String start(Model model, @AuthenticationPrincipal User user,@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam(required = false, name="name", defaultValue = "") String name,@RequestParam(defaultValue = "asc") String orientation,@RequestParam(defaultValue = "id") String orderBy)
+    {
+        log.info(user.getUsername());
         String location = "Estudiantes";
         model.addAttribute("location", location);
         Page<Student> pageStudents = studentService.getStudents(page, size, name, orientation, orderBy);

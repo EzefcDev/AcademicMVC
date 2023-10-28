@@ -1,15 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Academic</title>
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    </head>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/layout :: head"></head>
     <body>
         <header th:replace="layout/layout :: header"></header>
         <div class="container my-5">
@@ -37,10 +28,12 @@
                     </div>
                 </div>
             </form>
-            <a th:href="@{/agregar}" class="btn btn-primary mb-3">
-                <i class="fa-solid fa-plus"></i>
-                Agregar
-            <a/> 
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/agregar}" class="btn btn-primary mb-3">
+                    <i class="fa-solid fa-plus"></i>
+                    Agregar
+                <a/> 
+            </div>
             <!-- table -->
             <div th:if="${students != null and !students.empty}">
                 <table class="table">
@@ -51,7 +44,7 @@
                             <th scope="col">DNI</th>
                             <th scope="col">Carrera</th>
                             <th scope="col">Estado</th>
-                            <th scope="col"></th>
+                            <th sec:authorize="hasRole('ADMIN')" scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +54,7 @@
                             <td th:text="${student.dni}"></td>
                             <td th:text="${student.studentCareer}"></td>
                             <td th:text="${student.studentStatus.meaning}"></td>
-                            <td>
+                            <td sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/editar/} + ${student.id}" class="btn btn-light">
                                     <i class="fa-solid fa-pen"></i>
                                 <a/>
